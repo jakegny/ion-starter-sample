@@ -28,9 +28,9 @@ locally, fill in the correct values in the map."
 
 (defn- anomaly!
   ([name msg]
-     (throw (ex-info msg (anom-map name msg))))
+   (throw (ex-info msg (anom-map name msg))))
   ([name msg cause]
-     (throw (ex-info msg (anom-map name msg) cause))))
+   (throw (ex-info msg (anom-map name msg) cause))))
 
 (defn ensure-dataset
   "Ensure that a database named db-name exists, running setup-fn
@@ -54,9 +54,9 @@ against a connection. Returns connection"
        (reduce
         (fn [[modes ct] [k v]]
           (cond
-           (< v ct)  [modes ct]
-           (= v ct)  [(conj modes k) ct]
-           (> v ct) [#{k} v]))
+            (< v ct)  [modes ct]
+            (= v ct)  [(conj modes k) ct]
+            (> v ct) [#{k} v]))
         [#{} 2])
        first))
 
@@ -85,7 +85,7 @@ against a connection. Returns connection"
   "Web handler that returns the schema for datomic-docs-tutorial"
   [{:keys [headers body]}]
   {:status 200
-   :headers {"Content-Type" "application/edn"} 
+   :headers {"Content-Type" "application/edn"}
    :body (-> (get-connection) d/db schema pp-str)})
 
 (def get-tutorial-schema
@@ -127,7 +127,7 @@ against a connection. Returns connection"
   (let [type (some-> body read-edn)]
     (if (keyword? type)
       {:status 200
-       :headers {"Content-Type" "application/edn"} 
+       :headers {"Content-Type" "application/edn"}
        :body (-> (items-by-type* (d/db (get-connection)) type)
                  pp-str)}
       {:status 400
@@ -166,4 +166,3 @@ should be featured in a promotion."
     (and (= (:db/ident color) :green)
          (= (:db/ident size) :xlarge)
          (= (:db/ident type) :hat))))
-
